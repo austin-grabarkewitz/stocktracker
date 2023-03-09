@@ -17,7 +17,6 @@ const StockSearch = (props) => {
     let [followCount, setFollowCount] = useState(0)
     let [graphToDisplay, setGraphToDisplay] = useState(null)
     let [deleteCount, setDeleteCount] = useState(0)
-    const base_url = process.env.REACT_APP_BASE_URL
     // user = JSON.stringify(user);
     // user = JSON.parse(user);
 
@@ -37,7 +36,8 @@ useEffect(() => {
 
 
 let getFaveTicks = async() => {
-  let response = await fetch(`http://127.0.0.1:8000/api/tickers/`, {
+  const base_url = process.env.REACT_APP_BASE_URL
+  let response = await fetch(`http://${base_url}/api/tickers/`, {
       method: 'GET',
       headers: {
 
@@ -113,12 +113,13 @@ let getFaveTicks = async() => {
       //sends a POST request to the /api/tickers/ URL with the symbol of the stock to follow in the request body. 
       //ADD TOKEN AUTHERNTICATION VERIFICATION
       const handleFollow = (symbol) => {
+        const base_url = process.env.REACT_APP_BASE_URL
         const data = { 
             'favTicker': symbol,
             'user': user.user_id
         };
             
-        fetch(`http://127.0.0.1:8000/api/tickers/`, {
+        fetch(`http://${base_url}/api/tickers/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -155,11 +156,12 @@ const handleDisplayGraph = (id, title) => {
 
 
 const handleDelete = (id) => {
+  const base_url = process.env.REACT_APP_BASE_URL
   const data = { 
       'id': id
   }; 
 
-  fetch(`http://127.0.0.1:8000/api/tickers/`, {
+  fetch(`http://${base_url}/api/tickers/`, {
       method: 'DELETE',
       headers: {
           'Content-Type': 'application/json',
